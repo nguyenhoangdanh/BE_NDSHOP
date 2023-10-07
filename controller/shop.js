@@ -11,6 +11,8 @@ const sendToken = require("../utils/jwtToken");
 const sendShopToken = require("../utils/sendShopToken");
 const { isAuthenticated, isSeller, isAdmin } = require("../middleware/auth");
 const Shop = require("../model/shop");
+
+const cloudinary = require("cloudinary");
 router.post("/create-shop", upload.single("file"), async (req, res, next) => {
   try {
     const { email } = req.body;
@@ -31,11 +33,19 @@ router.post("/create-shop", upload.single("file"), async (req, res, next) => {
     const filename = req.file.filename;
     const fileUrl = path.join(filename);
 
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: "avatars",
+    });
+
     const seller = {
       name: req.body.name,
       email: email,
       password: req.body.password,
-      avatar: fileUrl,
+      // avatar: fileUrl,
+      avatar: {
+        public_id: myCloud.public_id,
+        url: myCloud.secure_url,
+      },
       address: req.body.address,
       phoneNumber: req.body.phoneNumber,
       zipCode: req.body.zipCode,
