@@ -12,9 +12,9 @@ const sendMail = require("../utils/sendMail");
 const sendToken = require("../utils/jwtToken");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
 
-
 const cloudinary = require("cloudinary");
-router.post("/create-user", upload.single("file"), async (req, res, next) => {
+// router.post("/create-user", upload.single("file"), async (req, res, next) => {
+router.post("/create-user", async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
     const userEmail = await User.findOne({ email });
@@ -365,9 +365,6 @@ router.get(
   })
 );
 
-
-
-
 //Forgot Password
 router.put(
   "/forgot-password",
@@ -411,8 +408,6 @@ router.put(
         success: true,
         message: "Password reset successfully!",
       });
-
-     
     } catch (error) {
       return next(new ErrorHandle(error.message, 500));
     }

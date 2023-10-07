@@ -13,7 +13,8 @@ const { isAuthenticated, isSeller, isAdmin } = require("../middleware/auth");
 const Shop = require("../model/shop");
 
 const cloudinary = require("cloudinary");
-router.post("/create-shop", upload.single("file"), async (req, res, next) => {
+// router.post("/create-shop", upload.single("file"), async (req, res, next) => {
+router.post("/create-shop", async (req, res, next) => {
   try {
     const { email } = req.body;
     const sellerEmail = await Shop.findOne({ email });
