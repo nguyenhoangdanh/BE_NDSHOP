@@ -46,19 +46,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "User",
   },
-  avatar:{
-    public_id: {
-      type: String,
-      required: true,
-    },
-    url: {
-      type: String,
-      required: true,
-    },
- },
 //   avatar:{
-//     type: String,
+//     public_id: {
+//       type: String,
+//       required: true,
+//     },
+//     url: {
+//       type: String,
+//       required: true,
+//     },
 //  },
+  avatar:{
+    type: String,
+ },
  createdAt:{
   type: Date,
   default: Date.now(),
