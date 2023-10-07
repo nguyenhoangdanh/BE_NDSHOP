@@ -10,7 +10,7 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "https://be-ndshop.vercel.app",
+  origin: "https://whotalkingnd.com",
   credentials: true,
 }));
 app.use("/", express.static("uploads"));
