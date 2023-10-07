@@ -10,10 +10,10 @@ const cors = require("cors");
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000", "https://whotalkingnd.com"],
   credentials: true,
 }));
-app.use("/static", express.static("uploads"));
+app.use("/", express.static("uploads"));
 app.use(bodyParser.urlencoded({extended:true,limit:"50mb"}));
 
 // config
