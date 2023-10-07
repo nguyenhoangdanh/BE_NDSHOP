@@ -19,20 +19,20 @@ router.post("/create-shop", async (req, res, next) => {
     const { email } = req.body;
     const sellerEmail = await Shop.findOne({ email });
 
-    if (sellerEmail) {
-      const filename = req.file.filename;
-      const filePath = `uploads/${filename}`;
-      fs.unlink(filePath, (err) => {
-        if (err) {
-          console.log(err);
-          res.status(500).json({ messgage: "Error deleting file" });
-        }
-      });
-      return next(new ErrorHandle("User already exists", 400));
-    }
+    // if (sellerEmail) {
+    //   const filename = req.file.filename;
+    //   const filePath = `uploads/${filename}`;
+    //   fs.unlink(filePath, (err) => {
+    //     if (err) {
+    //       console.log(err);
+    //       res.status(500).json({ messgage: "Error deleting file" });
+    //     }
+    //   });
+    //   return next(new ErrorHandle("User already exists", 400));
+    // }
 
-    const filename = req.file.filename;
-    const fileUrl = path.join(filename);
+    // const filename = req.file.filename;
+    // const fileUrl = path.join(filename);
 
     const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
       folder: "avatars",
