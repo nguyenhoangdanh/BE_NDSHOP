@@ -13,7 +13,8 @@ app.use(cors({
   origin: ["http://localhost:3000"],
   credentials: true,
 }));
-app.use("/", express.static("uploads"));
+app.use(express.static(__dirname + "uploads"));
+// app.use("/", express.static(__dirname + "uploads"));
 app.use(bodyParser.urlencoded({extended:true,limit:"50mb"}));
 
 // config
