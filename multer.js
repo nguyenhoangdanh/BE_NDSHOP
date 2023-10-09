@@ -1,9 +1,10 @@
 const multer = require("multer");
 const fs = require('fs');
+const path = require('path')
 const storage = multer.diskStorage({
     destination: function(req, res, cb ){
         fs.mkdir('./uploads/',(err)=>{
-            cb(null, './uploads/');
+            path.join(__dirname, '/uploads/')
          });
         // cb(null, "./uploads/")
     },
