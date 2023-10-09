@@ -14,48 +14,42 @@ const { isAuthenticated, isAdmin } = require("../middleware/auth");
 // const fileUploader = require('../configs/cloudinary.config');
 // const cloudinary = require("cloudinary");
 // router.post("/create-user", upload.single("file"), async (req, res, next) => {
-router.post("/create-user", async (req, res, next) => {
+router.post("/create-user",upload.single("file"), async (req, res, next) => {
   try {
-    const { name, email, password, avatar } = req.body;
+    const { name, email, password } = req.body;
     const userEmail = await User.findOne({ email });
 
-    // if (userEmail) {
-    //   const filename = req.file.filename;
-    //   const filePath = `uploads/${filename}`;
-    //   fs.unlink(filePath, (err) => {
-    //     if (err) {
-    //       console.log(err);
-    //       res.status(500).json({ message: "Error deleting file" });
-    //     }
-    //   });
-    //   return next(new ErrorHandle("User already exists", 400));
-    // }
-    // const filename = req.file.filename;
-    // const fileUrl = path.join(filename);
+    if (userEmail) {
+      const filename = req.file.filename;
+      const filePath = `uploads/${filename}`;
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.log(err);
+          res.status(500).json({ message: "Error deleting file" });
+        }
+      });
+      return next(new ErrorHandle("User already exists", 400));
+    }
+    const filename = req.file.filename;
+    const fileUrl = path.join(filename);
 
-    // const myCloud = await cloudinary.v2.uploader.upload(avatar, {
-    //   folder: "avatars",
-    // });
-
-    // const user = {
-    //   name: name,
-    //   email: email,
-    //   password: password,
-    //   // avatar: {
-    //   //   public_id: myCloud.public_id,
-    //   //   url: myCloud.secure_url,
-    //   // },
-    //   avatar: fileUrl,
-    // };
+    const myCloud = await cloudinary.v2.uploader.upload(avatar, {
+      folder: "avatars",
+    });
 
     const user = {
       name: name,
       email: email,
       password: password,
-      avatar: avatar,
+      // avatar: {
+      //   public_id: myCloud.public_id,
+      //   url: myCloud.secure_url,
+      // },
+      avatar: fileUrl,
     };
 
-    console.log("User", user)
+    
+   
     const activationToken = createActivationToken(user);
 
     const activationUrl = `https://fe-ndshop.vercel.app/${activationToken}`;
